@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Rankr</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #003366, #00509e);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 3rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #d1e4f5;
+            max-width: 600px;
+            margin: 10px auto;
+        }
+
+        /* Form Container */
+        .form-container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-container textarea,
+        .form-container input[type="file"],
+        .form-container button {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .form-container textarea {
+            resize: vertical;
+        }
+
+        .form-container input[type="file"] {
+            padding: 12px;
+            background-color: #f0f4f8;
+        }
+
+        .form-container button {
+            background: linear-gradient(to right, #00509e, #003366);
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background: linear-gradient(to right, #003366, #002244);
+        }
+
+        /* Results Section */
+        .results-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-container h2 {
+            text-align: center;
+            color: #00509e;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        table th,
+        table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #00509e;
+            color: #fff;
+        }
+
+        table tr:hover {
+            background: #f1f7fd;
+        }
+
+        /* Download Link */
+        .download-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-download {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(to right, #00509e, #003366);
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background: linear-gradient(to right, #003366, #002244);
+        }
+
+        /* About Us Section */
+        .about-us {
+            padding: 60px 20px;
+            background: #00509e;
+            color: #fff;
+            text-align: center;
+            border-radius: 12px;
+            margin: 50px 0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-us h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .about-us p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+
+        /* Mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            .form-container, .results-container, .about-us {
+                margin: 30px auto;
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Resume Rankr</h1>
+        <p>Rank resumes and find the best match for your job description using AI-powered analysis.</p>
+    </div>
+
+    <!-- Main Form Section -->
+    <div class="form-container">
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="job_description">Job Description:</label>
+            <textarea name="job_description" rows="4" placeholder="Paste the job description here" required></textarea>
+
+            <label for="resume_files">Upload Resumes:</label>
+            <input type="file" name="resume_files" accept=".docx" multiple required>
+
+            <button type="submit">Analyze Resumes</button>
+        </form>
+    </div>
+
+    <!-- Results Section -->
+    {% if results %}
+    <div class="results-container">
+        <h2>Ranked Resumes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Similarity (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ result[0][0] }}</td>
+                    <td>{{ result[1][0] }}</td>
+                    <td>{{ result[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="download-section">
+            <a href="{{ url_for('download_csv') }}" download="ranked_resumes.csv" class="btn-download">Download CSV</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- About Us Section -->
+    <div class="about-us">
+        <h2>About Us</h2>
+        <p>We are a team of professionals who built this AI-powered tool to help businesses and job seekers match the right talent. Our tool uses advanced algorithms to analyze resumes and job descriptions, providing insightful rankings to streamline the hiring process.</p>
+        <p>Creators: Stuti Goyal, Arman Shrivastav, and Harsh Vardhan Singh</p>
+    </div>
+</body>
+
+</html>
