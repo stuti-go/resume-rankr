@@ -1,0 +1,11 @@
+# Ignore uploaded files
+uploads/
+
+# Ignore instance folder
+instance/
+
+# Ignore Python cache files
+__pycache__/
+
+# Ignore virtual environment (if applicable)
+venv/

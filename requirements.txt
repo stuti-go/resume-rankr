@@ -1,4 +1,5 @@
-Flask==2.3.2
-spacy==3.7.3
-scikit-learn==1.3.2
-python-docx==0.8.11
+Flask
+Flask-SQLAlchemy
+spacy
+scikit-learn
+python-docx
